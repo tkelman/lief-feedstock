@@ -2,15 +2,23 @@
 
 set -xeuo pipefail
 
+LIEF_MBEDTLS_EXTERNAL=ON
+if [[ "${target_platform:-}" == "linux-riscv64" ]]; then
+  # LIEF 1.0.0 requires exactly MbedTLS 4.0.0, which is not published for
+  # linux-riscv64. Its source archive contains the supported 4.0.0 sources.
+  LIEF_MBEDTLS_EXTERNAL=OFF
+fi
+
 CMAKE_ARGS="${CMAKE_ARGS} \
   -DBUILD_STATIC_LIBS=OFF \
   -DBUILD_SHARED_LIBS=ON \
   -DCMAKE_SKIP_RPATH=ON \
   -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON \
   -DLIEF_EXAMPLES=OFF \
+  -DLIEF_EXTERNAL_SPDLOG=ON \
   -DLIEF_OPT_NLOHMANN_JSON_EXTERNAL=ON \
-  -DLIEF_OPT_MBEDTLS_EXTERNAL=ON \
-  -DLIEF_PY_LIEF_EXT=ON \
+  -DLIEF_OPT_MBEDTLS_EXTERNAL=${LIEF_MBEDTLS_EXTERNAL} \
+  -DLIEF_PY_LIEF_EXT=OFF \
   -DLIEF_PY_LIEF_EXT_SHARED=ON \
   -DLIEF_PYTHON_API=OFF \
 "

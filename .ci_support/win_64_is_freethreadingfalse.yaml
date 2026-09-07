@@ -8,6 +8,14 @@ channel_targets:
 - conda-forge main
 cxx_compiler:
 - vs2022
+fmt:
+- '12.1'
+is_freethreading:
+- false
+- false
+- false
+- false
+- false
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -17,6 +25,11 @@ python:
 - 3.11.* *_cpython
 - 3.12.* *_cpython
 - 3.13.* *_cp313
-- 3.9.* *_cpython
+- 3.14.* *_cp314
+spdlog:
+- '1.17'
 target_platform:
 - win-64
+zip_keys:
+- - python
+  - is_freethreading
